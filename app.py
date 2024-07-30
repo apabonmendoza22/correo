@@ -37,6 +37,65 @@ def send_email():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
        
+
+@app.route('/swagger.json') 
+def swagger():
+    swagger_content = {
+        "openapi": "3.0.0",
+        "info": {
+            "title": "Email Sender API",
+            "description": "API to send emails",
+            "version": "1.0.0"
+        },
+
+        "servers": [
+            {"url": "http://localhost:3636"}
+        ],
+        "paths": {
+            "/send-email": {
+                "post": {
+                    "summary": "Send an email",
+                    "requestBody": {
+                        "required": True,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "proveedor": {
+                                            "type": "string"
+                                        },
+                                        "destinatario": {
+                                            "type": "string"
+                                        },
+                                        "asunto": {
+                                            "type": "string"
+                                        },
+                                        "mensaje": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Email sent successfully"
+                        },
+                        "400": {
+                            "description": "Missing required fields"
+                        },
+                        "500": {
+                            "description": "Internal server error"
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return jsonify(swagger_content)
+
  
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3636,debug=True)
