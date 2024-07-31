@@ -47,7 +47,6 @@ def swagger():
             "description": "API to send emails",
             "version": "1.0.0"
         },
-
         "servers": [
             {"url": "http://localhost:3636"}
         ],
@@ -81,17 +80,57 @@ def swagger():
                     },
                     "responses": {
                         "200": {
-                            "description": "Email sent successfully"
+                            "description": "Email sent successfully",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "description": "Resultado de la consulta"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "400": {
-                            "description": "Missing required fields"
+                            "description": "Missing required fields",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "error": {
+                                                "type": "string",
+                                                "description": "Mensaje de error"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "500": {
-                            "description": "Internal server error"
+                            "description": "Internal server error",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "error": {
+                                                "type": "string",
+                                                "description": "Mensaje de error"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            }
+            },
+
         }
     }
     return jsonify(swagger_content)
